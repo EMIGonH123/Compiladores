@@ -15,6 +15,15 @@ public class Lexic {
     public static int indiceLastAcept = 0;
     public static EstadoSi estadoActual;
     
+    public static void reset(){
+        cadena = "";
+        automata = null;
+        indice = 0;
+        indiceAnterior = 0;
+        indiceLastAcept = 0;
+        estadoActual = null;
+    }
+    
     public static Token getToken() throws IOException, FileNotFoundException, ClassNotFoundException{
         
         EstadoSi estadoActual = automata.getEstadoInicial();

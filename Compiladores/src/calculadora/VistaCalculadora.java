@@ -66,6 +66,8 @@ public class VistaCalculadora extends javax.swing.JFrame {
         TituloResultadoLexico = new javax.swing.JLabel();
         TituloNombreObjeto = new javax.swing.JLabel();
         ListaNombreObjetos = new javax.swing.JComboBox<>();
+        ResultadoOperacion = new javax.swing.JTextField();
+        TituloResultadoSintactico1 = new javax.swing.JLabel();
         PanelBaseTitulo = new javax.swing.JPanel();
         Titulo = new javax.swing.JTextField();
         Salir = new javax.swing.JLabel();
@@ -120,6 +122,12 @@ public class VistaCalculadora extends javax.swing.JFrame {
 
         ListaNombreObjetos.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
+        ResultadoOperacion.setEditable(false);
+
+        TituloResultadoSintactico1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        TituloResultadoSintactico1.setForeground(new java.awt.Color(255, 255, 255));
+        TituloResultadoSintactico1.setText("Resultado de la operación");
+
         javax.swing.GroupLayout PanelBaseCuerpoLayout = new javax.swing.GroupLayout(PanelBaseCuerpo);
         PanelBaseCuerpo.setLayout(PanelBaseCuerpoLayout);
         PanelBaseCuerpoLayout.setHorizontalGroup(
@@ -130,18 +138,21 @@ public class VistaCalculadora extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelBaseCuerpoLayout.createSequentialGroup()
                         .addComponent(Aceptar)
                         .addGap(53, 53, 53))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelBaseCuerpoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(TituloNombreObjeto)
-                        .addComponent(TituloResultadoSintactico)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelBaseCuerpoLayout.createSequentialGroup()
-                            .addComponent(ResultadoSintactico)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(BanderaSintactica, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addComponent(CadenaEntrada)
-                        .addComponent(TituloCadenaDeEntrada)
-                        .addComponent(TituloResultadoLexico)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 189, Short.MAX_VALUE)
-                        .addComponent(ListaNombreObjetos, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelBaseCuerpoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(TituloResultadoSintactico1)
+                        .addGroup(PanelBaseCuerpoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(TituloNombreObjeto)
+                            .addComponent(TituloResultadoSintactico)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelBaseCuerpoLayout.createSequentialGroup()
+                                .addComponent(ResultadoSintactico)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(BanderaSintactica, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(CadenaEntrada)
+                            .addComponent(TituloCadenaDeEntrada)
+                            .addComponent(TituloResultadoLexico)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 189, Short.MAX_VALUE)
+                            .addComponent(ListaNombreObjetos, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(ResultadoOperacion))))
                 .addContainerGap(37, Short.MAX_VALUE))
         );
         PanelBaseCuerpoLayout.setVerticalGroup(
@@ -165,9 +176,13 @@ public class VistaCalculadora extends javax.swing.JFrame {
                 .addGroup(PanelBaseCuerpoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(BanderaSintactica, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(ResultadoSintactico, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(80, 80, 80)
+                .addGap(12, 12, 12)
+                .addComponent(TituloResultadoSintactico1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(ResultadoOperacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(Aceptar)
-                .addContainerGap(12, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         getContentPane().add(PanelBaseCuerpo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 40, 260, 410));
@@ -281,7 +296,8 @@ public class VistaCalculadora extends javax.swing.JFrame {
         System.out.println("----------- ANALISIS LEXICO -----------");
         System.out.println("---------------------------------------");
         String cadena = CadenaEntrada.getText();
-        
+        Lexic.reset();
+        Sintactico.limpiarResultadoLexico();
         Lexic.cadena = cadena; //Mandamos la cadena a Lexic
         try {
             System.out.println("-------- Cargando AFD(Objeto) ---------");
@@ -292,27 +308,18 @@ public class VistaCalculadora extends javax.swing.JFrame {
             System.out.println("---- Analizar la cadena: '"+cadena+"' ---");
             System.out.println("---------------------------------------");
             
-            Token t;
-            StringBuilder resultadoLexico = new StringBuilder();
-            
-            /*while( (t= Lexic.getToken()).token != 0 ){
-                resultadoLexico.append("Lexema: "+t.lexema+"\n"+"Token: "+t.token+"\n\n");
-                System.out.println("Lexema: "+t.lexema);
-                System.out.println("Token: "+ t.token+"\n");
-            }
-            ResultadoLexico.setText(resultadoLexico.toString());
-            */
-            
-            
             FlotanteEmi f = new FlotanteEmi();
             if( Sintactico.ASDR( f ) ){
                 ResultadoSintactico.setText("CORRECTO");
-                System.out.println("El resultado es: "+f.getValor());
+                String resultado = String.valueOf(f.getValor());
+                System.out.println("El resultado es: "+resultado);
+                ResultadoOperacion.setText(resultado);
                 BanderaSintactica.setBackground(new Color(0,255,0) );
             }else{
                 ResultadoSintactico.setText("INCORRECTO");
                 BanderaSintactica.setBackground(new Color(255,0,0) );
             }
+            ResultadoLexico.setText(Sintactico.resultadoLexico.toString());
         } catch (IOException ex) {
             Logger.getLogger(VistaCalculadora.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
@@ -334,6 +341,7 @@ public class VistaCalculadora extends javax.swing.JFrame {
     private javax.swing.JPanel PanelBaseCuerpo;
     private javax.swing.JPanel PanelBaseTitulo;
     private javax.swing.JTextArea ResultadoLexico;
+    private javax.swing.JTextField ResultadoOperacion;
     private javax.swing.JTextField ResultadoSintactico;
     private javax.swing.JLabel Salir;
     private javax.swing.JTextField Titulo;
@@ -341,6 +349,7 @@ public class VistaCalculadora extends javax.swing.JFrame {
     private javax.swing.JLabel TituloNombreObjeto;
     private javax.swing.JLabel TituloResultadoLexico;
     private javax.swing.JLabel TituloResultadoSintactico;
+    private javax.swing.JLabel TituloResultadoSintactico1;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 }

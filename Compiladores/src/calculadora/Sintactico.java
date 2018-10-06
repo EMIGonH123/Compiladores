@@ -6,7 +6,10 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public class Sintactico {
-
+    public static StringBuilder resultadoLexico = new StringBuilder();
+    public static void limpiarResultadoLexico(){
+        resultadoLexico.replace(0, resultadoLexico.length(),"");
+    }
     public static boolean ASDR( FlotanteEmi f ) throws IOException, FileNotFoundException, ClassNotFoundException{
         if( E(f) ){
             System.out.println("Dentro de E en ASDR");
@@ -31,12 +34,13 @@ public class Sintactico {
     
     public static boolean Ep( FlotanteEmi f )throws IOException, FileNotFoundException, ClassNotFoundException{
         Token t = Lexic.getToken();
+        resultadoLexico.append("Lexema: "+t.lexema+"\n"+"Token: "+t.token+"\n\n");
         if( (t.token == TokenCalculadora.MAS)  || (t.token == TokenCalculadora.MENOS) ){
-            
+            float aux = f.getValor();
             FlotanteEmi f2 = new FlotanteEmi();
             if( T( f2 ) ){
                 System.out.println("Dentro de T en Ep");
-                float aux = f.getValor();
+                
                 System.out.println("En Ep, antes de operacion: "+aux);
                 aux += ( (t.token == TokenCalculadora.MAS) ? f2.getValor() : (-f2.getValor()) );
                 System.out.println("En Ep, despues de operacion: "+aux);
@@ -68,11 +72,13 @@ public class Sintactico {
     public static boolean  Tp( FlotanteEmi f ) throws IOException, FileNotFoundException, ClassNotFoundException{
         
         Token t = Lexic.getToken();
+        resultadoLexico.append("Lexema: "+t.lexema+"\n"+"Token: "+t.token+"\n\n");
+        
         if( (t.token == TokenCalculadora.PROD) || ( t.token == TokenCalculadora.DIV ) ){
+            float aux = f.getValor();
             FlotanteEmi f2 = new FlotanteEmi();
             if( F( f2 ) ){
                 System.out.println("Dentro de F en Tp");
-                float aux = f.getValor();
                 System.out.println("En Tp, antes de operacion: "+aux);
                 aux *= ((t.token == TokenCalculadora.PROD)?f2.getValor():(1.0/f2.getValor())) ;
                 System.out.println("En Tp, despues de operacion: "+aux);
@@ -90,6 +96,7 @@ public class Sintactico {
     
     public static boolean F( FlotanteEmi f ) throws IOException, FileNotFoundException, ClassNotFoundException{
         Token t  = Lexic.getToken();
+        resultadoLexico.append("Lexema: "+t.lexema+"\n"+"Token: "+t.token+"\n\n");
         float aux;
         
         switch( t.token ){
@@ -97,6 +104,7 @@ public class Sintactico {
                 if( E(f) ){
                     System.out.println("Dentro de E en F");
                     Token t2 = Lexic.getToken();
+                    resultadoLexico.append("Lexema: "+t2.lexema+"\n"+"Token: "+t2.token+"\n\n");
                     if( t2.token == TokenCalculadora.PDER ){
                         return true;
                     }
