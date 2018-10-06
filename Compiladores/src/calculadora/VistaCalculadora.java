@@ -1,6 +1,8 @@
-package interfaz;
+package calculadora;
 
+import interfaz.*;
 import static calculadora.Sintactico.*;
+import calculadora.FlotanteEmi.*;
 import compiladores.AFD;
 import compiladores.EstadoSi;
 import compiladores.Lexic;
@@ -18,12 +20,12 @@ import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
-public class VistaLexico extends javax.swing.JFrame {
+public class VistaCalculadora extends javax.swing.JFrame {
     
     private OperacionesAutomata ventanaOperaciones;
     private Hashtable<Integer,AFD> automatas;
     
-    public VistaLexico(OperacionesAutomata ventanaOperaciones) {
+    public VistaCalculadora(OperacionesAutomata ventanaOperaciones) {
         initComponents();
         this.setLocationRelativeTo(null);
         this.ventanaOperaciones = ventanaOperaciones;
@@ -55,6 +57,9 @@ public class VistaLexico extends javax.swing.JFrame {
         PanelBaseCuerpo = new javax.swing.JPanel();
         Aceptar = new javax.swing.JButton();
         CadenaEntrada = new javax.swing.JTextField();
+        BanderaSintactica = new javax.swing.JTextField();
+        ResultadoSintactico = new javax.swing.JTextField();
+        TituloResultadoSintactico = new javax.swing.JLabel();
         TituloCadenaDeEntrada = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         ResultadoLexico = new javax.swing.JTextArea();
@@ -87,6 +92,15 @@ public class VistaLexico extends javax.swing.JFrame {
             }
         });
 
+        BanderaSintactica.setEditable(false);
+        BanderaSintactica.setBackground(new java.awt.Color(204, 204, 204));
+
+        ResultadoSintactico.setEditable(false);
+
+        TituloResultadoSintactico.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        TituloResultadoSintactico.setForeground(new java.awt.Color(255, 255, 255));
+        TituloResultadoSintactico.setText("Resultado Sintáctico");
+
         TituloCadenaDeEntrada.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         TituloCadenaDeEntrada.setForeground(new java.awt.Color(255, 255, 255));
         TituloCadenaDeEntrada.setText("Ingresa la cadena");
@@ -111,19 +125,23 @@ public class VistaLexico extends javax.swing.JFrame {
         PanelBaseCuerpoLayout.setHorizontalGroup(
             PanelBaseCuerpoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(PanelBaseCuerpoLayout.createSequentialGroup()
+                .addGap(34, 34, 34)
                 .addGroup(PanelBaseCuerpoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(PanelBaseCuerpoLayout.createSequentialGroup()
-                        .addGap(34, 34, 34)
-                        .addGroup(PanelBaseCuerpoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(TituloNombreObjeto)
-                            .addComponent(CadenaEntrada)
-                            .addComponent(TituloCadenaDeEntrada)
-                            .addComponent(TituloResultadoLexico)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 189, Short.MAX_VALUE)
-                            .addComponent(ListaNombreObjetos, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addGroup(PanelBaseCuerpoLayout.createSequentialGroup()
-                        .addGap(91, 91, 91)
-                        .addComponent(Aceptar)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelBaseCuerpoLayout.createSequentialGroup()
+                        .addComponent(Aceptar)
+                        .addGap(53, 53, 53))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelBaseCuerpoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(TituloNombreObjeto)
+                        .addComponent(TituloResultadoSintactico)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelBaseCuerpoLayout.createSequentialGroup()
+                            .addComponent(ResultadoSintactico)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(BanderaSintactica, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(CadenaEntrada)
+                        .addComponent(TituloCadenaDeEntrada)
+                        .addComponent(TituloResultadoLexico)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 189, Short.MAX_VALUE)
+                        .addComponent(ListaNombreObjetos, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap(37, Short.MAX_VALUE))
         );
         PanelBaseCuerpoLayout.setVerticalGroup(
@@ -137,16 +155,22 @@ public class VistaLexico extends javax.swing.JFrame {
                 .addComponent(TituloCadenaDeEntrada)
                 .addGap(4, 4, 4)
                 .addComponent(CadenaEntrada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(TituloResultadoLexico)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(TituloResultadoSintactico)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(PanelBaseCuerpoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(BanderaSintactica, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(ResultadoSintactico, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(80, 80, 80)
                 .addComponent(Aceptar)
-                .addContainerGap(16, Short.MAX_VALUE))
+                .addContainerGap(12, Short.MAX_VALUE))
         );
 
-        getContentPane().add(PanelBaseCuerpo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 40, 260, 360));
+        getContentPane().add(PanelBaseCuerpo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 40, 260, 410));
 
         PanelBaseTitulo.setBackground(new java.awt.Color(102, 102, 102));
 
@@ -154,7 +178,7 @@ public class VistaLexico extends javax.swing.JFrame {
         Titulo.setBackground(new java.awt.Color(102, 102, 102));
         Titulo.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         Titulo.setForeground(new java.awt.Color(255, 255, 255));
-        Titulo.setText("Análisis Léxico");
+        Titulo.setText("Calculadora");
         Titulo.setBorder(null);
 
         Salir.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
@@ -172,9 +196,9 @@ public class VistaLexico extends javax.swing.JFrame {
         PanelBaseTituloLayout.setHorizontalGroup(
             PanelBaseTituloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(PanelBaseTituloLayout.createSequentialGroup()
-                .addContainerGap(65, Short.MAX_VALUE)
+                .addContainerGap(73, Short.MAX_VALUE)
                 .addComponent(Titulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(38, 38, 38)
+                .addGap(54, 54, 54)
                 .addComponent(Salir, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         PanelBaseTituloLayout.setVerticalGroup(
@@ -241,9 +265,15 @@ public class VistaLexico extends javax.swing.JFrame {
         }System.out.println("\n");
     }
     
+    public void resetAllColors(){
+        BanderaSintactica.setBackground(new Color(204,204,204));
+    }
     public void resetAllData(){
         CadenaEntrada.setText("");
         ResultadoLexico.setText("");
+        ResultadoSintactico.setText("");
+        
+        
     }
     
     private void AceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AceptarActionPerformed
@@ -266,37 +296,50 @@ public class VistaLexico extends javax.swing.JFrame {
             Token t;
             StringBuilder resultadoLexico = new StringBuilder();
             
-            while( (t= Lexic.getToken()).token != 0 ){
+            /*while( (t= Lexic.getToken()).token != 0 ){
                 resultadoLexico.append("Lexema: "+t.lexema+"\n"+"Token: "+t.token+"\n\n");
                 System.out.println("Lexema: "+t.lexema);
                 System.out.println("Token: "+ t.token+"\n");
             }
             ResultadoLexico.setText(resultadoLexico.toString());
-            
+            */
+            //FlotanteEmi f = new FlotanteEmi();
+            if( Sintactico.ASDR() ){
+                System.out.println("El resultado es: "+Sintactico.f.getValor());
+                ResultadoSintactico.setText("CORRECTO");
+                BanderaSintactica.setBackground(new Color(0,255,0) );
+            }else{
+                ResultadoSintactico.setText("INCORRECTO");
+                BanderaSintactica.setBackground(new Color(255,0,0) );
+            }
         } catch (IOException ex) {
-            Logger.getLogger(VistaLexico.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(VistaCalculadora.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(VistaLexico.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(VistaCalculadora.class.getName()).log(Level.SEVERE, null, ex);
         }
         
     }//GEN-LAST:event_AceptarActionPerformed
 
     private void CadenaEntradaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_CadenaEntradaMouseClicked
         resetAllData();
+        resetAllColors();
     }//GEN-LAST:event_CadenaEntradaMouseClicked
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Aceptar;
+    private javax.swing.JTextField BanderaSintactica;
     private javax.swing.JTextField CadenaEntrada;
     private javax.swing.JComboBox<String> ListaNombreObjetos;
     private javax.swing.JPanel PanelBaseCuerpo;
     private javax.swing.JPanel PanelBaseTitulo;
     private javax.swing.JTextArea ResultadoLexico;
+    private javax.swing.JTextField ResultadoSintactico;
     private javax.swing.JLabel Salir;
     private javax.swing.JTextField Titulo;
     private javax.swing.JLabel TituloCadenaDeEntrada;
     private javax.swing.JLabel TituloNombreObjeto;
     private javax.swing.JLabel TituloResultadoLexico;
+    private javax.swing.JLabel TituloResultadoSintactico;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 }

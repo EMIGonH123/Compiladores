@@ -1,5 +1,6 @@
 package interfaz;
 
+import calculadora.VistaCalculadora;
 import compiladores.AFD;
 import compiladores.Automata;
 import compiladores.Estado;
@@ -65,6 +66,7 @@ public class OperacionesAutomata extends javax.swing.JFrame {
         CrearAFNBasico = new javax.swing.JTextField();
         AutomataGeneral = new javax.swing.JTextField();
         AnalisisLexico = new javax.swing.JTextField();
+        Calculadora = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(153, 153, 153));
@@ -320,14 +322,30 @@ public class OperacionesAutomata extends javax.swing.JFrame {
             }
         });
 
+        Calculadora.setEditable(false);
+        Calculadora.setBackground(new java.awt.Color(153, 153, 153));
+        Calculadora.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        Calculadora.setForeground(new java.awt.Color(255, 255, 255));
+        Calculadora.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        Calculadora.setText("Calculadora");
+        Calculadora.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                CalculadoraMouseMoved(evt);
+            }
+        });
+        Calculadora.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                CalculadoraMouseClicked(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                CalculadoraMouseExited(evt);
+            }
+        });
+
         javax.swing.GroupLayout PanelContenidoLayout = new javax.swing.GroupLayout(PanelContenido);
         PanelContenido.setLayout(PanelContenidoLayout);
         PanelContenidoLayout.setHorizontalGroup(
             PanelContenidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelContenidoLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(BTNSallir)
-                .addGap(174, 174, 174))
             .addGroup(PanelContenidoLayout.createSequentialGroup()
                 .addGroup(PanelContenidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(PanelContenidoLayout.createSequentialGroup()
@@ -353,6 +371,15 @@ public class OperacionesAutomata extends javax.swing.JFrame {
                         .addGap(88, 88, 88)
                         .addComponent(AutomataGeneral, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(25, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelContenidoLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(PanelContenidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelContenidoLayout.createSequentialGroup()
+                        .addComponent(BTNSallir)
+                        .addGap(174, 174, 174))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelContenidoLayout.createSequentialGroup()
+                        .addComponent(Calculadora, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(151, 151, 151))))
         );
         PanelContenidoLayout.setVerticalGroup(
             PanelContenidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -377,12 +404,14 @@ public class OperacionesAutomata extends javax.swing.JFrame {
                     .addComponent(AnalisisLexico, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(AutomataGeneral, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(Calculadora, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
                 .addComponent(BTNSallir)
                 .addContainerGap())
         );
 
-        getContentPane().add(PanelContenido, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 40, 430, 260));
+        getContentPane().add(PanelContenido, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 40, 430, 290));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -405,6 +434,7 @@ public class OperacionesAutomata extends javax.swing.JFrame {
     private void resetAllColors(){
         resetColorTF(CerraduraPositiva);
         resetColorTF(CerraduraMult);
+        resetColorTF(Calculadora);
         resetColorTF(CrearAFNBasico);
         resetColorTF(CerraduraOpcional);
         resetColorTF(UnionAFN);
@@ -643,6 +673,24 @@ public class OperacionesAutomata extends javax.swing.JFrame {
         resetAllColors();
     }//GEN-LAST:event_AnalisisLexicoMouseExited
 
+    private void CalculadoraMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_CalculadoraMouseMoved
+        // TODO add your handling code here:
+        resetAllColors();
+        setColorTF(Calculadora);
+    }//GEN-LAST:event_CalculadoraMouseMoved
+
+    private void CalculadoraMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_CalculadoraMouseClicked
+        // TODO add your handling code here:
+        VistaCalculadora vistacalculadora = new VistaCalculadora(this);
+        vistacalculadora.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_CalculadoraMouseClicked
+
+    private void CalculadoraMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_CalculadoraMouseExited
+        // TODO add your handling code here:
+        resetAllColors();
+    }//GEN-LAST:event_CalculadoraMouseExited
+
     public static void main(String []args){
         OperacionesAutomata m = new OperacionesAutomata();
         m.setVisible(true);
@@ -652,6 +700,7 @@ public class OperacionesAutomata extends javax.swing.JFrame {
     private javax.swing.JTextField AnalisisLexico;
     private javax.swing.JTextField AutomataGeneral;
     private javax.swing.JToggleButton BTNSallir;
+    private javax.swing.JTextField Calculadora;
     private javax.swing.JTextField CerraduraMult;
     private javax.swing.JTextField CerraduraOpcional;
     private javax.swing.JTextField CerraduraPositiva;

@@ -11,6 +11,7 @@ public class Lexic {
     public static String cadena;
     public static AFD automata;
     public static int indice = 0;
+    public static int indiceAnterior = 0;
     public static int indiceLastAcept = 0;
     public static EstadoSi estadoActual;
     
@@ -19,6 +20,7 @@ public class Lexic {
         EstadoSi estadoActual = automata.getEstadoInicial();
         EstadoSi ultimoEstadoDeAceptacion = null;
         boolean bandera = false;
+        indiceAnterior = indice;
         
         StringBuilder lexema = new StringBuilder();
         char c[] = cadena.toCharArray();
@@ -32,7 +34,14 @@ public class Lexic {
             bandera = false;
             char caracter = c[indice];
             for(TransicionSi t : estadoActual.getTransiciones()){
-                if((t.getSimboloFin() == caracter) || (t.getSimboloInicio() == caracter)){
+                if( (t.getSimboloInicio() == 'D') || (t.getSimboloFin() == 'D') ){
+                    if(Character.isDigit(caracter)){
+                        estadoActual = t.getEstadoDestino();
+                        bandera = true;
+                        lexema.append(caracter);
+                        break;
+                    }
+                }else if((t.getSimboloFin() == caracter) || (t.getSimboloInicio() == caracter)){
                     estadoActual = t.getEstadoDestino();
                     bandera = true;
                     lexema.append(caracter);
@@ -56,6 +65,10 @@ public class Lexic {
         }
         
         return new Token(lexema.toString(), ultimoEstadoDeAceptacion.getToken());
+    }
+    
+    public static void regresarToken()throws IOException, FileNotFoundException, ClassNotFoundException{
+        indice = indiceAnterior;
     }
     
     public static AFD cargarObjeto(String ruta) throws FileNotFoundException, IOException, ClassNotFoundException{
