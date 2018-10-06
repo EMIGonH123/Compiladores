@@ -1,7 +1,7 @@
 package calculadora;
 
 public class FlotanteEmi {
-    public float v1;
+    public static float v1;
     FlotanteEmi(){
         v1 = 0;
     }
@@ -9,7 +9,7 @@ public class FlotanteEmi {
         this.v1 = v1;
     }
     public void setValor(float v1){
-        this.v1 += v1;
+        this.v1 = v1;
     }
     
     public float getValor(){

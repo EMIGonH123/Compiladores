@@ -29,7 +29,7 @@ public class VistaCalculadora extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         this.ventanaOperaciones = ventanaOperaciones;
-        String ruta = "C:\\Users\\Emi Gon H\\Documents\\Compiladores\\Compiladores";
+        String ruta = "/home/emigonh/Escritorio/SextoSemestre/Compiladores/Compiladores";
         String expresionRegular = "(\\w)+.txt";
         File f = new File(ruta);
         if( (f.exists()) && (f.length()>0) ){
@@ -287,7 +287,6 @@ public class VistaCalculadora extends javax.swing.JFrame {
             System.out.println("-------- Cargando AFD(Objeto) ---------");
             String nombreObjeto = ListaNombreObjetos.getSelectedItem().toString();
             Lexic.automata = (AFD)Lexic.cargarObjeto(nombreObjeto);
-            //Lexic.automata = (AFD)Lexic.cargarObjeto("GeneradorAutomatico.txt");
             imprimirInfo(Lexic.automata);
             System.out.println("---------------------------------------");
             System.out.println("---- Analizar la cadena: '"+cadena+"' ---");
@@ -303,10 +302,12 @@ public class VistaCalculadora extends javax.swing.JFrame {
             }
             ResultadoLexico.setText(resultadoLexico.toString());
             */
-            //FlotanteEmi f = new FlotanteEmi();
-            if( Sintactico.ASDR() ){
-                System.out.println("El resultado es: "+Sintactico.f.getValor());
+            
+            
+            FlotanteEmi f = new FlotanteEmi();
+            if( Sintactico.ASDR( f ) ){
                 ResultadoSintactico.setText("CORRECTO");
+                System.out.println("El resultado es: "+f.getValor());
                 BanderaSintactica.setBackground(new Color(0,255,0) );
             }else{
                 ResultadoSintactico.setText("INCORRECTO");
