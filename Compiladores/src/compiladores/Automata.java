@@ -14,6 +14,7 @@ import java.util.Stack;
 import javax.swing.JOptionPane;
 
 public class Automata implements Serializable{
+    
     public Estado estadoInicial;
     public Set<Character> alfabeto;
     public Set<Estado> estados;
@@ -43,6 +44,29 @@ public class Automata implements Serializable{
         this.agregarEstados(edoFinal);
         this.setAlfabeto(c);
         
+    }
+    
+    //Metodo para crear Automata básico
+    //es como el constructor pero este es por medio de un 
+    //metodo.
+    public Automata crearBasico(char c){
+        /* Elementos que vamos a necesetar para hacer el
+        Automata simple */
+        alfabeto = new HashSet<>();
+        estados = new HashSet<>();
+        estadosFinales = new HashSet<>();
+        Estado edoInicial = new Estado();
+        Estado edoFinal = new Estado();
+        
+        edoInicial.setTransicion(new Transicion(c, edoFinal));
+        edoFinal.setBandera(true);
+        
+        this.setEstadoInicial(edoInicial);
+        this.agregarEstadoFinal(edoFinal);
+        this.agregarEstados(edoInicial);
+        this.agregarEstados(edoFinal);
+        this.setAlfabeto(c);
+        return this;
     }
     
     /**************/

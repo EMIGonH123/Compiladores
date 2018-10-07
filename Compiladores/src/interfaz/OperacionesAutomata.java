@@ -5,6 +5,7 @@ import compiladores.AFD;
 import compiladores.Automata;
 import compiladores.Estado;
 import compiladores.Transicion;
+import generadorDeAutomatas.VistaGeneradorAutomatas;
 import java.awt.Color;
 import java.util.Enumeration;
 import java.util.HashSet;
@@ -67,6 +68,7 @@ public class OperacionesAutomata extends javax.swing.JFrame {
         AutomataGeneral = new javax.swing.JTextField();
         AnalisisLexico = new javax.swing.JTextField();
         Calculadora = new javax.swing.JTextField();
+        GeneradorPorER = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(153, 153, 153));
@@ -342,14 +344,42 @@ public class OperacionesAutomata extends javax.swing.JFrame {
             }
         });
 
+        GeneradorPorER.setEditable(false);
+        GeneradorPorER.setBackground(new java.awt.Color(153, 153, 153));
+        GeneradorPorER.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        GeneradorPorER.setForeground(java.awt.Color.white);
+        GeneradorPorER.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        GeneradorPorER.setText("Generador de automatas por ER");
+        GeneradorPorER.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                GeneradorPorERMouseMoved(evt);
+            }
+        });
+        GeneradorPorER.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                GeneradorPorERMouseClicked(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                GeneradorPorERMouseExited(evt);
+            }
+        });
+
         javax.swing.GroupLayout PanelContenidoLayout = new javax.swing.GroupLayout(PanelContenido);
         PanelContenido.setLayout(PanelContenidoLayout);
         PanelContenidoLayout.setHorizontalGroup(
             PanelContenidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelContenidoLayout.createSequentialGroup()
+                .addContainerGap(210, Short.MAX_VALUE)
+                .addComponent(BTNSallir)
+                .addGap(174, 174, 174))
             .addGroup(PanelContenidoLayout.createSequentialGroup()
-                .addGroup(PanelContenidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(22, 22, 22)
+                .addGroup(PanelContenidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(PanelContenidoLayout.createSequentialGroup()
-                        .addGap(22, 22, 22)
+                        .addComponent(Calculadora, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(GeneradorPorER, javax.swing.GroupLayout.DEFAULT_SIZE, 248, Short.MAX_VALUE))
+                    .addGroup(PanelContenidoLayout.createSequentialGroup()
                         .addGroup(PanelContenidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(CerraduraOpcional, javax.swing.GroupLayout.DEFAULT_SIZE, 121, Short.MAX_VALUE)
                             .addComponent(CerraduraMult, javax.swing.GroupLayout.DEFAULT_SIZE, 121, Short.MAX_VALUE)
@@ -367,19 +397,8 @@ public class OperacionesAutomata extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(ConcatenacionAFN, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(AnalisisLexico)))
-                    .addGroup(PanelContenidoLayout.createSequentialGroup()
-                        .addGap(88, 88, 88)
-                        .addComponent(AutomataGeneral, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(AutomataGeneral))
                 .addContainerGap(25, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelContenidoLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(PanelContenidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelContenidoLayout.createSequentialGroup()
-                        .addComponent(BTNSallir)
-                        .addGap(174, 174, 174))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelContenidoLayout.createSequentialGroup()
-                        .addComponent(Calculadora, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(151, 151, 151))))
         );
         PanelContenidoLayout.setVerticalGroup(
             PanelContenidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -405,8 +424,10 @@ public class OperacionesAutomata extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(AutomataGeneral, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(Calculadora, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
+                .addGroup(PanelContenidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(Calculadora, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(GeneradorPorER, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(BTNSallir)
                 .addContainerGap())
         );
@@ -440,6 +461,7 @@ public class OperacionesAutomata extends javax.swing.JFrame {
         resetColorTF(UnionAFN);
         resetColorTF(AutomataGeneral);
         resetColorTF(AnalisisLexico);
+        resetColorTF(GeneradorPorER);
         resetColorTF(ConcatenacionAFN);
         resetColorTF(ConversionAFD);
     }
@@ -687,9 +709,23 @@ public class OperacionesAutomata extends javax.swing.JFrame {
     }//GEN-LAST:event_CalculadoraMouseClicked
 
     private void CalculadoraMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_CalculadoraMouseExited
-        // TODO add your handling code here:
         resetAllColors();
     }//GEN-LAST:event_CalculadoraMouseExited
+
+    private void GeneradorPorERMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_GeneradorPorERMouseMoved
+        resetAllColors();
+        setColorTF(GeneradorPorER);
+    }//GEN-LAST:event_GeneradorPorERMouseMoved
+
+    private void GeneradorPorERMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_GeneradorPorERMouseClicked
+        VistaGeneradorAutomatas vga = new VistaGeneradorAutomatas(this, conjuntoAutomatas);
+        vga.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_GeneradorPorERMouseClicked
+
+    private void GeneradorPorERMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_GeneradorPorERMouseExited
+        resetAllColors();
+    }//GEN-LAST:event_GeneradorPorERMouseExited
 
     public static void main(String []args){
         OperacionesAutomata m = new OperacionesAutomata();
@@ -708,6 +744,7 @@ public class OperacionesAutomata extends javax.swing.JFrame {
     private javax.swing.JTextField ConversionAFD;
     private javax.swing.JTextField CrearAFNBasico;
     private javax.swing.JLabel Exit;
+    private javax.swing.JTextField GeneradorPorER;
     private javax.swing.JLabel LBLTitulo;
     private javax.swing.JPanel PanelContenido;
     private javax.swing.JPanel PanelTitulo;
